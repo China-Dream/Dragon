@@ -2,85 +2,52 @@
 
 #include "Solution.h"
 
-class AddTwoNumbers : public Solution
-{
-public:
+/* #2
+You are given two non - empty linked lists representing two non - negative integers.The digits are stored in reverse order and each of their nodes contain a single digit.Add the two numbers and return it as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+https ://leetcode-cn.com/problems/add-two-numbers
+*/
+class AddTwoNumbers {
     struct ListNode {
         int val;
         ListNode *next;
         ListNode(int x) : val(x), next(NULL) {}
     };
 
+public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         ListNode* head = new ListNode(0);
         auto p = head;
-        auto p1 = l1;
-        auto p2 = l2;
+        int bit = 0;
 
-        int advanced = 0;
-        while (p1 != nullptr && p2 != nullptr)
+        while (l1 != nullptr || l2 != nullptr || bit != 0)
         {
-            auto val = p1->val + p2->val + advanced;
-            auto node = new ListNode(val % 10);
-            advanced = val / 10;
-
-            p->next = node;
-            p = node;
-
-            p1 = p1->next;
-            p2 = p2->next;
-        }
-
-        if (p1 == nullptr)
-        {
-            for (auto q = p2; q != nullptr; q = q->next)
+            int sum = bit;
+            if (l1 != nullptr)
             {
-                auto val = q->val + advanced;
-                auto node = new ListNode(val % 10);
-                advanced = val / 10;
-
-                p->next = node;
-                p = node;
+                sum += l1->val;
             }
-        }
 
-        if (p2 == nullptr)
-        {
-            for (auto q = p1; q != nullptr; q = q->next)
+            if (l2 != nullptr)
             {
-                auto val = q->val + advanced;
-                auto node = new ListNode(val % 10);
-                advanced = val / 10;
-
-                p->next = node;
-                p = node;
+                sum += l2->val;
             }
+
+            bit = sum / 10;
+            sum = sum % 10;
+
+            p->next = new ListNode(sum);
+            p = p->next;
+            if (l1 != nullptr)  l1 = l1->next;
+            if (l2 != nullptr)  l2 = l2->next;
         }
 
-        if (advanced != 0)
-        {
-            p->next = new ListNode(advanced);
-        }
-
-        p = head;
-        head = head->next;
-        delete p;
-
-        return head;
+        p = head->next;
+        delete head;
+        return p;
     }
 
-    virtual void Test()
+    virtual void Run()
     {
-        ListNode* p1 = new ListNode(2); ListNode* p2 = new ListNode(4); ListNode* p3 = new ListNode(3);
-        ListNode* q1 = new ListNode(5); ListNode* q2 = new ListNode(6); ListNode* q3 = new ListNode(4);
-        p1->next = p2; p2->next = p3;
-        q1->next = q2; q2->next = q3;
-
-        auto r = addTwoNumbers(p1, q1);
-        for (auto p = r; p != nullptr; p = p->next)
-        {
-            cout << p->val << " ";
-        }
-        cout << std::endl;
     }
 };

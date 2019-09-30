@@ -78,13 +78,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClInclude Include="Source\Coin.hpp" />
+    <ClInclude Include="Source\Helper.hpp" />
+    <ClInclude Include="Source\LeetCode.hpp" />
+    <ClInclude Include="Source\LinkedList.hpp" />
+    <ClInclude Include="Source\Solution.h" />
+    <ClInclude Include="Source\NumSum.hpp" />
+    <ClInclude Include="Source\Tree.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\LinkedList.hpp" />
-    <ClInclude Include="Source\Substring.hpp" />
-    <ClInclude Include="Source\Solution.h" />
-    <ClInclude Include="Source\IntArray.hpp" />
+    <ClCompile Include="Source\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
