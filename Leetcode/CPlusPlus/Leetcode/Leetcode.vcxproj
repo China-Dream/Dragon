@@ -78,12 +78,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Coin.hpp" />
+    <ClInclude Include="Source\Design.hpp" />
+    <ClInclude Include="Source\DP_Algorithm.hpp" />
+    <ClInclude Include="Source\DP_Stock.hpp" />
     <ClInclude Include="Source\Helper.hpp" />
     <ClInclude Include="Source\LeetCode.hpp" />
     <ClInclude Include="Source\LinkedList.hpp" />
+    <ClInclude Include="Source\MultiThread.hpp" />
+    <ClInclude Include="Source\NumTheory.hpp" />
+    <ClInclude Include="Source\Others.hpp" />
     <ClInclude Include="Source\Solution.h" />
     <ClInclude Include="Source\NumSum.hpp" />
+    <ClInclude Include="Source\Strings.hpp" />
     <ClInclude Include="Source\Tree.hpp" />
   </ItemGroup>
   <ItemGroup>

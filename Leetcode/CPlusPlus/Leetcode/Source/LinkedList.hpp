@@ -51,3 +51,77 @@ public:
     {
     }
 };
+
+/* #138
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+
+Return a deep copy of the list.
+https ://leetcode-cn.com/problems/copy-list-with-random-pointer
+*/
+class CopyRandomList : public Solution
+{
+    // Definition for a Node.
+    class Node {
+    public:
+        int val;
+        Node* next;
+        Node* random;
+
+        Node() {}
+
+        Node(int _val, Node* _next, Node* _random) {
+            val = _val;
+            next = _next;
+            random = _random;
+        }
+    };
+
+public:
+    Node* copyRandomList(Node* head) {
+        if (head == nullptr)
+        {
+            return head;
+        }
+
+        map<Node*, Node*> nodeMap;
+        auto p = head;
+        auto q = new Node();
+        auto head_ = q;
+        while (p != nullptr)
+        {
+            q->next = new Node();
+            q = q->next;
+            q->val = p->val;
+            q->next = nullptr;
+
+            nodeMap[p] = q;
+            p = p->next;
+        }
+
+        p = head;
+        q = head_->next;
+        while (p != nullptr)
+        {
+            if (p->random == nullptr)
+            {
+                q->random = nullptr;
+            }
+            else
+            {
+                q->random = nodeMap[p->random];
+            }
+
+            p = p->next;
+            q = q->next;
+        }
+
+        q = head_->next;
+        delete head_;
+        return q;
+    }
+
+    virtual void Run()
+    {
+
+    }
+};
