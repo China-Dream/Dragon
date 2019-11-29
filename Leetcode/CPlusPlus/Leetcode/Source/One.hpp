@@ -1,7 +1,7 @@
-﻿#pragma once
+﻿#ifndef _ONE_HPP_
+#define _ONE_HPP_
 
 #include "Solution.h"
-#include "Helper.hpp"
 
 /* #1
 *Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -42,119 +42,105 @@ public:
     }
 };
 
-/* #167
-*Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
-*The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2.
-*https ://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted
+/* #2
+You are given two non - empty linked lists representing two non - negative integers.The digits are stored in reverse order and each of their nodes contain a single digit.Add the two numbers and return it as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+https ://leetcode-cn.com/problems/add-two-numbers
 */
-class TwoSumII : public Solution
-{
+class AddTwoNumbers {
+    struct ListNode {
+        int val;
+        ListNode *next;
+        ListNode(int x) : val(x), next(NULL) {}
+    };
+
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int low = 0, high = (int)numbers.size() - 1;
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* head = new ListNode(0);
+        auto p = head;
+        int bit = 0;
 
-        while (low < high)
+        while (l1 != nullptr || l2 != nullptr || bit != 0)
         {
-            auto sum = numbers[low] + numbers[high];
+            int sum = bit;
+            if (l1 != nullptr)
+            {
+                sum += l1->val;
+            }
 
-            if (sum == target)
+            if (l2 != nullptr)
             {
-                return vector<int>({ low + 1, high + 1 });
+                sum += l2->val;
             }
-            else if (sum < target)
-            {
-                low++;
-            }
-            else
-            {
-                high--;
-            }
+
+            bit = sum / 10;
+            sum = sum % 10;
+
+            p->next = new ListNode(sum);
+            p = p->next;
+            if (l1 != nullptr)  l1 = l1->next;
+            if (l2 != nullptr)  l2 = l2->next;
         }
 
-        return vector<int>({ 0, 0 });
+        p = head->next;
+        delete head;
+        return p;
     }
 
     virtual void Run()
     {
-        vector<int> vec = { 2, 7, 11, 15 };
-        cout << twoSum(vec, 9);
     }
 };
 
-/*  #653
-*Given a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to the given target.
-*https ://leetcode-cn.com/problems/two-sum-iv-input-is-a-bst
+/* #5
+Given a string s, find the longest palindromic substring in s.You may assume that the maximum length of s is 1000.
+https ://leetcode-cn.com/problems/longest-palindromic-substring
 */
-class TwoSumIV : public Solution
+class LongestPalindrome : public Solution
 {
 public:
-    struct TreeNode {
-        int val;
-        TreeNode *left;
-        TreeNode *right;
-        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-    };
-
-    bool findTarget(TreeNode* root, int k) {
-        if (root == nullptr)
+    string longestPalindrome(string s) {
+        if (s.empty())
         {
-            return false;
+            return s;
         }
 
-        std::set<int> nums;
-        std::stack<TreeNode*> stack;
-
-        stack.push(root);
-        while (!stack.empty())
+        int start = 0, end = 0;
+        int len = (int)s.size();
+        for (int i = 0; i < len; i++)
         {
-            auto p = stack.top();
-            if (nums.find(k - p->val) != nums.end())
+            auto low = i - 1, high = i + 1;
+            while (low >= 0 && high < len && s[low] == s[high])
             {
-                return true;
+                low--;
+                high++;
             }
-            else
+            if (high - low - 1 > end - start)
             {
-                nums.insert(p->val);
+                start = low + 1;
+                end = high;
             }
 
-            stack.pop();
-            if (p->right != nullptr)
+            low = i, high = i + 1;
+            while (low >= 0 && high < len && s[low] == s[high])
             {
-                stack.push(p->right);
+                low--;
+                high++;
             }
-            if (p->left != nullptr)
+            if (high - low - 1 > end - start)
             {
-                stack.push(p->left);
+                start = low + 1;
+                end = high;
             }
         }
 
-        return false;
-    }
-
-    /*bool findTarget(TreeNode* root, int k) {
-        std::unordered_set<int> nums;
-        return traverse(root, k, nums);
-    }*/
-
-    bool traverse(TreeNode* root, int k, std::unordered_set<int>& nums) {
-        if (root == nullptr)
-        {
-            return false;
-        }
-
-        if (nums.find(k - root->val) != nums.end())
-        {
-            return true;
-        }
-
-        nums.insert(root->val);
-
-        return traverse(root->left, k, nums) || traverse(root->right, k, nums);
+        return s.substr(start, end - start);
     }
 
     virtual void Run()
     {
-        cout << findTarget(nullptr, 0);
+        string s("bb");
+        cout << longestPalindrome(s) << endl;
     }
 };
 
@@ -173,11 +159,11 @@ public:
             return ret;
         }
 
-        qsort(nums.data(), nums.size(), sizeof(nums[0]), 
+        qsort(nums.data(), nums.size(), sizeof(nums[0]),
             [](const void* p1, const void* p2)
-            {
-                return *(int*)p1 < *(int*)p2 ? -1 : 1;
-            });
+        {
+            return *(int*)p1 < *(int*)p2 ? -1 : 1;
+        });
 
         for (int i = 0; i < (int)nums.size() - 2 && nums[i] <= 0; i++)
         {
@@ -257,7 +243,7 @@ public:
             return *(int*)p1 < *(int*)p2 ? -1 : 1;
         });
 
-        for (int i = 0; i < (int)nums.size() - 2 && 3 * nums[i] - target < bestErr ; i++)
+        for (int i = 0; i < (int)nums.size() - 2 && 3 * nums[i] - target < bestErr; i++)
         {
             auto target_ = target - nums[i];
 
@@ -390,58 +376,216 @@ public:
     }
 };
 
-/* #560
-*Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.
-*https ://leetcode-cn.com/problems/subarray-sum-equals-k
+/* #53
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+https ://leetcode-cn.com/problems/maximum-subarray
 */
-class SubarraySum : public Solution
+class MaxSubArray : public Solution
 {
 public:
-    int subarraySum(vector<int>& nums, int k) {
+    int maxSubArray(vector<int>& nums) {
         if (nums.empty())
         {
             return 0;
         }
 
-        auto size = (int)nums.size();
-        vector<int> sums(size);
-        sums[0] = nums[0];
-        for (int i = 1; i < size; i++)
-        {
-            sums[i] = sums[i - 1] + nums[i];
-        }
+        auto len = (int)nums.size();
+        auto maxSum = nums[0];
+        auto lastSum = nums[0];
 
-        int count = 0;
-        unordered_multimap<int, int> map;
-        for (int i = 0; i < size; i++)
+        for (int i = 1; i < len; ++i)
         {
-            map.insert(unordered_map<int, int>::value_type(sums[i], i));
-
-            if (k == sums[i])
+            if (lastSum > 0)
             {
-                count++;
+                lastSum += nums[i];
+            }
+            else
+            {
+                lastSum = nums[i];
+            }
+
+            if (lastSum > maxSum)
+            {
+                maxSum = lastSum;
             }
         }
 
-        for (int i = 0; i < size - 1; i++)
-        {
-            auto range = map.equal_range(sums[i] + k);
-
-            for (auto it = range.first; it != range.second; it++)
-            {
-                if (it->second > i)
-                {
-                    count++;
-                }
-            }
-        }
-
-        return count;
+        return maxSum;
     }
 
     virtual void Run()
     {
-        vector<int> nums = { 1, 1, 1 };
-        cout << subarraySum(nums, 2) << endl;
+        vector<int> nums = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+        cout << maxSubArray(nums) << endl;
     }
 };
+
+/* #69
+Implement int sqrt(int x).
+
+Compute and return the square root of x, where x is guaranteed to be a non - negative integer.
+
+Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
+https://leetcode-cn.com/problems/sqrtx
+*/
+class MySqrt : public Solution
+{
+public:
+    int mySqrt(int x) {
+        int low = 0, high = x;
+        int res = 0;
+        while (low <= high)
+        {
+            auto mid = low + (high - low) / 2;
+            double t = (double)x / mid;
+
+            if (abs(t - mid) < DBL_EPSILON && mid * mid == x)
+            {
+                return mid;
+            }
+            else if (t > mid)
+            {
+                low = mid + 1;
+                res = mid;
+            }
+            else
+            {
+                high = mid - 1;
+            }
+        }
+
+        return res;
+    }
+
+    virtual void Run()
+    {
+        cout << mySqrt(9) << endl;
+    }
+};
+
+/* #94
+* Given a binary tree, return the inorder traversal of its nodes' values.
+*/
+class InorderTraversal : public Solution
+{
+    struct TreeNode {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    };
+
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> vec;
+
+        if (root == nullptr)
+        {
+            return vec;
+        }
+
+        stack<TreeNode*> ptrs;
+        stack<bool> flags;
+        ptrs.push(root);
+        flags.push(false);
+
+        while (!ptrs.empty())
+        {
+            auto ptr = ptrs.top();
+            auto flag = flags.top();
+            ptrs.pop();
+            flags.pop();
+
+            if (!flag)
+            {
+                if (ptr->right != nullptr)
+                {
+                    ptrs.push(ptr->right);
+                    flags.push(false);
+                }
+                ptrs.push(ptr);
+                flags.push(true);
+                if (ptr->left != nullptr)
+                {
+                    ptrs.push(ptr->left);
+                    flags.push(false);
+                }
+            }
+            else
+            {
+                vec.push_back(ptr->val);
+            }
+        }
+
+        return vec;
+    }
+
+    /*vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> vec;
+
+    if (root == nullptr)
+    {
+    return vec;
+    }
+
+    traverse(root, vec);
+    return vec;
+    }*/
+
+    void traverse(TreeNode* root, vector<int>& vec)
+    {
+        if (root->left != nullptr)
+        {
+            traverse(root->left, vec);
+        }
+
+        vec.push_back(root->val);
+
+        if (root->right != nullptr)
+        {
+            traverse(root->right, vec);
+        }
+    }
+
+    virtual void Run()
+    {
+
+    }
+};
+
+/* #98
+*Given a binary tree, determine if it is a valid binary search tree (BST).
+*/
+class IsValidBST : public Solution
+{
+    struct TreeNode {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    };
+
+public:
+    bool isValidBST(TreeNode* root) {
+        return isValidBST(root, LONG_MIN, LONG_MAX);
+    }
+
+    bool isValidBST(TreeNode* root, long min, long max)
+    {
+        if (root == NULL)
+        {
+            return true;
+        }
+
+        return (root->val > min) && (root->val < max) &&
+            isValidBST(root->left, min, root->val) &&
+            isValidBST(root->right, root->val, max);
+    }
+
+    virtual void Run()
+    {
+
+    }
+};
+
+#endif

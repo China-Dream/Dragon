@@ -1,13 +1,19 @@
-﻿#ifndef _MULTI_THREAD_HPP_
-#define _MULTI_THREAD_HPP_
-
-#include <condition_variable>
-#include <functional>
-#include <mutex>
-#include <thread>
+﻿#ifndef _TWELVE_HPP_
+#define _TWELVE_HPP_
 
 #include "Solution.h"
 
+/* #1114
+Suppose we have a class:
+
+public class Foo {
+  public void first() { print("first"); }
+    public void second() { print("second"); }
+      public void third() { print("third"); }
+      }
+      The same instance of Foo will be passed to three different threads. Thread A will call first(), thread B will call second(), and thread C will call third(). Design a mechanism and modify the program to ensure that second() is executed after first(), and third() is executed after second().
+      https://leetcode-cn.com/problems/print-in-order
+      */
 class Foo : public Solution
 {
 public:
@@ -115,6 +121,47 @@ public:
         t1.join();
         t2.join();
         t3.join();
+    }
+};
+
+/* #1143
+Given two strings text1 and text2, return the length of their longest common subsequence.
+A subsequence of a string is a new string generated from the original string with some characters(can be none) deleted without changing the relative order of the remaining characters. (eg, "ace" is a subsequence of "abcde" while "aec" is not).A common subsequence of two strings is a subsequence that is common to both strings.
+If there is no common subsequence, return 0.
+https ://leetcode-cn.com/problems/longest-common-subsequence
+*/
+class LongestCommonSubsequence : public Solution
+{
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        auto len1 = (int)text1.size();
+        auto len2 = (int)text2.size();
+        vector<vector<int>> buff(len1 + 1, vector<int>(len2 + 1, 0));
+
+        for (int k = 2; k <= len1 + len2; k++)
+        {
+            for (int i = max(1, k - len2); i <= min(len1, k - 1); i++)
+            {
+                auto j = k - i;
+                if (text1[i - 1] == text2[j - 1])
+                {
+                    buff[i][j] = buff[i - 1][j - 1] + 1;
+                }
+                else
+                {
+                    buff[i][j] = max(buff[i - 1][j], buff[i][j - 1]);
+                }
+            }
+        }
+
+        return buff[len1][len2];
+    }
+
+    virtual void Run()
+    {
+        string text1 = "abcde";
+        string text2 = "acd";
+        cout << longestCommonSubsequence(text1, text2) << endl;
     }
 };
 

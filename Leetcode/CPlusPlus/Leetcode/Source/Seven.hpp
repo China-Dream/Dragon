@@ -1,5 +1,5 @@
-﻿#ifndef _DESIGN_HPP_
-#define _DESIGN_HPP_
+﻿#ifndef _SEVEN_HPP_
+#define _SEVEN_HPP_
 
 #include "Solution.h"
 
@@ -19,7 +19,6 @@ isEmpty(): Checks whether the circular queue is empty or not.
 isFull(): Checks whether the circular queue is full or not.
 https://leetcode-cn.com/problems/design-circular-queue
 */
-
 class MyCircularQueue : public Solution
 {
 public:
@@ -100,15 +99,120 @@ public:
     }
 };
 
-/**
-* Your MyCircularQueue object will be instantiated and called as such:
-* MyCircularQueue* obj = new MyCircularQueue(k);
-* bool param_1 = obj->enQueue(value);
-* bool param_2 = obj->deQueue();
-* int param_3 = obj->Front();
-* int param_4 = obj->Rear();
-* bool param_5 = obj->isEmpty();
-* bool param_6 = obj->isFull();
+/*  #653
+*Given a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to the given target.
+*https ://leetcode-cn.com/problems/two-sum-iv-input-is-a-bst
 */
+class TwoSumIV : public Solution
+{
+public:
+    struct TreeNode {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    };
 
+    bool findTarget(TreeNode* root, int k) {
+        if (root == nullptr)
+        {
+            return false;
+        }
+
+        std::set<int> nums;
+        std::stack<TreeNode*> stack;
+
+        stack.push(root);
+        while (!stack.empty())
+        {
+            auto p = stack.top();
+            if (nums.find(k - p->val) != nums.end())
+            {
+                return true;
+            }
+            else
+            {
+                nums.insert(p->val);
+            }
+
+            stack.pop();
+            if (p->right != nullptr)
+            {
+                stack.push(p->right);
+            }
+            if (p->left != nullptr)
+            {
+                stack.push(p->left);
+            }
+        }
+
+        return false;
+    }
+
+    /*bool findTarget(TreeNode* root, int k) {
+    std::unordered_set<int> nums;
+    return traverse(root, k, nums);
+    }*/
+
+    bool traverse(TreeNode* root, int k, std::unordered_set<int>& nums) {
+        if (root == nullptr)
+        {
+            return false;
+        }
+
+        if (nums.find(k - root->val) != nums.end())
+        {
+            return true;
+        }
+
+        nums.insert(root->val);
+
+        return traverse(root->left, k, nums) || traverse(root->right, k, nums);
+    }
+
+    virtual void Run()
+    {
+        cout << findTarget(nullptr, 0);
+    }
+};
+
+/* #674
+Given an unsorted array of integers, find the length of longest continuous increasing subsequence(subarray).
+https ://leetcode-cn.com/problems/longest-continuous-increasing-subsequence
+*/
+class FindLengthOfLCIS : public Solution
+{
+public:
+    int findLengthOfLCIS(vector<int>& nums) {
+        int maxLength = 0;
+        int start = 0;
+        int total = (int)nums.size();
+
+        for (int i = 1; i < total; ++i)
+        {
+            if (nums[i] <= nums[i - 1])
+            {
+                if (i - start > maxLength)
+                {
+                    maxLength = i - start;
+                }
+
+                if (start + maxLength >= total)
+                {
+                    break;
+                }
+
+                start = i;
+            }
+        }
+
+        return max(maxLength, total - start);
+    }
+
+    virtual void Run()
+    {
+        vector<int> nums = { 1, 2, 5, 3, 4 };
+        cout << findLengthOfLCIS(nums) << endl;
+    }
+};
 #endif

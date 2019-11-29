@@ -1,5 +1,5 @@
-﻿#ifndef _STRINGS_HPP_
-#define _STRINGS_HPP_
+﻿#ifndef _FIVE_HPP_
+#define _THREE_HPP_
 
 #include "Solution.h"
 
@@ -71,31 +71,47 @@ public:
     }
 };
 
-/* #537
-Given two strings representing two complex numbers.
-You need to return a string representing their multiplication.Note i2 = -1 according to the definition.
-https ://leetcode-cn.com/problems/complex-number-multiplication
+/* #455
+Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie. Each child i has a greed factor gi, which is the minimum size of a cookie that the child will be content with; and each cookie j has a size sj. If sj >= gi, we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximize the number of your content children and output the maximum number.
+
+Note:
+You may assume the greed factor is always positive.
+You cannot assign more than one cookie to one child.
+https://leetcode-cn.com/problems/assign-cookies
 */
-class ComplexNumberMultiply : public Solution
+class FindContentChildren : public Solution
 {
 public:
-    string complexNumberMultiply(string a, string b) {
-        int t1 = a.find('+');
-        int t2 = b.find('+');
-        int _a = std::stoi(a.substr(0, t1));
-        int _b = std::stoi(b.substr(0, t2));
-        int a_ = std::stoi(a.substr(t1 + 1, a.find('i') - t1));
-        int b_ = std::stoi(b.substr(t2 + 1, b.find('i') - t2));
-        int _ab = _a * _b - a_ * b_;
-        int ab_ = _a * b_ + _b * a_;
-        return std::string(std::to_string(_ab) + "+" + std::to_string(ab_) + "i");
+    int findContentChildren(vector<int>& g, vector<int>& s) {
+        std::sort(g.begin(), g.end());
+        std::sort(s.begin(), s.end());
+
+        auto content = 0;
+        auto lenG = (int)g.size();
+        auto lenS = (int)s.size();
+        int i = 0, j = 0;
+        while (i < lenG && j < lenS)
+        {
+            if (g[i] <= s[j])
+            {
+                content++;
+                i++;
+                j++;
+            }
+            else
+            {
+                j++;
+            }
+        }
+
+        return content;
     }
 
     virtual void Run()
     {
-        string a = "1+-1i";
-        string b = "1+-1i";
-        cout << complexNumberMultiply(a, b) << endl;
+        vector<int> g = { 1, 2 };
+        vector<int> s = { 1, 2, 3 };
+        cout << findContentChildren(g, s) << endl;
     }
 };
 

@@ -2,6 +2,7 @@
 #define _SOLUTION_H_
 
 #include <algorithm>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <queue>
@@ -9,6 +10,7 @@
 #include <sstream>
 #include <stack>
 #include <string>
+#include <thread>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>

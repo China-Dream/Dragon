@@ -78,19 +78,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Design.hpp" />
-    <ClInclude Include="Source\DP_Algorithm.hpp" />
-    <ClInclude Include="Source\DP_Stock.hpp" />
+    <ClInclude Include="Source\Eight.hpp" />
+    <ClInclude Include="Source\Eleven.hpp" />
+    <ClInclude Include="Source\Five.hpp" />
+    <ClInclude Include="Source\Four.hpp" />
     <ClInclude Include="Source\Helper.hpp" />
     <ClInclude Include="Source\LeetCode.hpp" />
-    <ClInclude Include="Source\LinkedList.hpp" />
-    <ClInclude Include="Source\MultiThread.hpp" />
-    <ClInclude Include="Source\NumTheory.hpp" />
+    <ClInclude Include="Source\Nine.hpp" />
+    <ClInclude Include="Source\One.hpp" />
     <ClInclude Include="Source\Others.hpp" />
+    <ClInclude Include="Source\Seven.hpp" />
+    <ClInclude Include="Source\Six.hpp" />
     <ClInclude Include="Source\Solution.h" />
-    <ClInclude Include="Source\NumSum.hpp" />
-    <ClInclude Include="Source\Strings.hpp" />
-    <ClInclude Include="Source\Tree.hpp" />
+    <ClInclude Include="Source\Ten.hpp" />
+    <ClInclude Include="Source\Three.hpp" />
+    <ClInclude Include="Source\Twelve.hpp" />
+    <ClInclude Include="Source\Two.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp" />
