@@ -165,4 +165,34 @@ public:
     }
 };
 
+/* #1189
+Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
+You can use each character in text at most once. Return the maximum number of instances that can be formed.
+https://leetcode-cn.com/problems/maximum-number-of-balloons
+*/
+class MaxNumberOfBalloons : public Solution
+{
+public:
+    int maxNumberOfBalloons(string text) {
+        vector<int> nums(5, 0);
+
+        for (int i = 0; i < (int)text.length(); i++)
+        {
+            if (text[i] == 'a') nums[0]++;
+            if (text[i] == 'b') nums[1]++;
+            if (text[i] == 'l') nums[2]++;
+            if (text[i] == 'n') nums[3]++;
+            if (text[i] == 'o') nums[4]++;
+        }
+
+        return min(nums[0], min(nums[1], min(nums[2] / 2, min(nums[3], nums[4] / 2))));
+    }
+
+    virtual void Run()
+    {
+        string text = "loonbalxballpoon";
+        cout << maxNumberOfBalloons(text) << endl;
+    }
+};
+
 #endif

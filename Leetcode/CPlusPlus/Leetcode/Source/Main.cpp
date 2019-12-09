@@ -9,8 +9,10 @@ int main()
     //TEST_ThreeSum                   // #15
     //TEST_ThreeSumClosest            // #16
     //TEST_FourSum                    // #18
+    //TEST_Permute                    // #46
     //TEST_MaxSubArray                // #53
     //TEST_MySqrt                     // #69
+    //TEST_NumDecodings               // #91
     //TEST_InorderTraversal           // #94
     //TEST_IsValidBST                 // #98
 
@@ -34,12 +36,17 @@ int main()
     //TEST_MaxRotateFunction          // #396
 
     // Five.hpp
+    //TEST_LevelOrder                 // #429
     //TEST_FindAnagrams               // #438
     //TEST_FindContentChildren        // #455
+    TEST_RandomPointInRects         // #497
 
     // Six.hpp
+    //TEST_CountArrangement           // #526
     //TEST_ComplexNumberMultiply      // #537
     //TEST_SubarraySum                // #560
+    //TEST_PreorderN                  // #589
+    //TEST_PostorderN                 // #590
 
     // Seven.hpp
     //TEST_MyCircularQueue            // #622
@@ -53,6 +60,7 @@ int main()
     //TEST_MinEatingSpeed             // #875
 
     // Ten.hpp
+    //TEST_NumUniqueEmails            // #929
     //TEST_OddEvenJumps               // #975
     //TEST_MinCostTickets             // #983
 
@@ -63,7 +71,8 @@ int main()
     // Twelve.hpp
     //TEST_Foo                        // #1114
     //TEST_LongestCommonSubsequence   // #1143
+    //TEST_MaxNumberOfBalloons        // #1189
 
     // Others.hpp
-    TEST_Fraction                   // LCP2
+    //TEST_Fraction                   // LCP2
 }

@@ -3,6 +3,56 @@
 
 #include "Solution.h"
 
+/* #526
+Suppose you have N integers from 1 to N. We define a beautiful arrangement as an array that is constructed by these N numbers successfully if one of the following is true for the ith position (1 <= i <= N) in this array:
+
+The number at the ith position is divisible by i.
+i is divisible by the number at the ith position.
+ 
+
+ Now given N, how many beautiful arrangements can you construct?
+ https://leetcode-cn.com/problems/beautiful-arrangement
+*/
+class CountArrangement : public Solution
+{
+public:
+    int countArrangement(int N) {
+        vector<int> arr(N);
+        for (int i = 0; i < N; i++)
+        {
+            arr[i] = i + 1;
+        }
+
+        int n = 0;
+        Permute(arr, 0, n);
+
+        return n;
+    }
+
+    void Permute(vector<int>& arr, int pos, int& n)
+    {
+        if (pos == arr.size())
+        {
+            n++;
+        }
+
+        for (int i = pos; i < (int)arr.size(); i++)
+        {
+            std::swap(arr[pos], arr[i]);
+            if (arr[pos] % (pos + 1) == 0 || (pos + 1) % arr[pos] == 0)
+            {
+                Permute(arr, pos + 1, n);
+            }
+            std::swap(arr[pos], arr[i]);
+        }
+    }
+
+    virtual void Run()
+    {
+        cout << countArrangement(3) << endl;
+    }
+};
+
 /* #537
 Given two strings representing two complex numbers.
 You need to return a string representing their multiplication.Note i2 = -1 according to the definition.
@@ -87,4 +137,168 @@ public:
     }
 };
 
+/* #589
+Given an n-ary tree, return the preorder traversal of its nodes' values.
+
+Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).
+https://leetcode-cn.com/problems/n-ary-tree-preorder-traversal
+*/
+class PreorderN : public Solution
+{
+public:
+    class Node {
+    public:
+        int val;
+        vector<Node*> children;
+
+        Node() {}
+
+        Node(int _val) {
+            val = _val;
+        }
+
+        Node(int _val, vector<Node*> _children) {
+            val = _val;
+            children = _children;
+        }
+    };
+
+    vector<int> preorder(Node* root) {
+        vector<int> nums;
+        preorder(root, nums);
+        return nums;
+    }
+
+    void preorder(Node* root, vector<int>& nums)
+    {
+        if (root == nullptr)
+        {
+            return;
+        }
+
+        nums.push_back(root->val);
+
+        for (auto it = root->children.cbegin(); it != root->children.cend(); it++)
+        {
+            preorder(*it, nums);
+        }
+    }
+
+    vector<int> preorder_(Node* root) {
+        vector<int> nums;
+
+        if (root == nullptr)
+        {
+            return nums;
+        }
+
+        stack<Node*> ptrs;
+        ptrs.push(root);
+
+        while (!ptrs.empty())
+        {
+            auto ptr = ptrs.top();
+            ptrs.pop();
+
+            nums.push_back(ptr->val);
+            for (auto it = ptr->children.rbegin(); it != ptr->children.rend(); it++)
+            {
+                if (*it != nullptr)
+                {
+                    ptrs.push(*it);
+                }
+            }
+        }
+
+        return nums;
+    }
+
+    virtual void Run()
+    {
+
+    }
+};
+
+/* #590
+Given an n-ary tree, return the postorder traversal of its nodes' values.
+
+Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).
+https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal
+*/
+class PostorderN : public Solution
+{
+public:
+    class Node {
+    public:
+        int val;
+        vector<Node*> children;
+
+        Node() {}
+
+        Node(int _val) {
+            val = _val;
+        }
+
+        Node(int _val, vector<Node*> _children) {
+            val = _val;
+            children = _children;
+        }
+    };
+
+    vector<int> postorder(Node* root) {
+        vector<int> nums;
+        postorder(root, nums);
+        return nums;
+    }
+
+    void postorder(Node* root, vector<int>& nums)
+    {
+        if (root == nullptr)
+        {
+            return;
+        }
+
+        for (auto it = root->children.cbegin(); it != root->children.cend(); it++)
+        {
+            postorder(*it, nums);
+        }
+
+        nums.push_back(root->val);
+    }
+
+    vector<int> postorder_(Node* root) {
+        vector<int> nums;
+
+        if (root == nullptr)
+        {
+            return nums;
+        }
+
+        stack<Node*> ptrs;
+        ptrs.push(root);
+
+        while (!ptrs.empty())
+        {
+            auto ptr = ptrs.top();
+            ptrs.pop();
+
+            nums.push_back(ptr->val);
+            for (auto it = ptr->children.begin(); it != ptr->children.end(); it++)
+            {
+                if (*it != nullptr)
+                {
+                    ptrs.push(*it);
+                }
+            }
+        }
+
+        std::reverse(nums.begin(), nums.end());
+        return nums;
+    }
+
+    virtual void Run()
+    {
+
+    }
+};
 #endif

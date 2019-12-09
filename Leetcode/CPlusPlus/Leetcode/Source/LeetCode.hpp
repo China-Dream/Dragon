@@ -16,8 +16,8 @@
 #include "Others.hpp"
 
 #define test_solution(SolutionClass) \
-    SolutionClass inst; \
-    inst.Run();
+    SolutionClass inst_##SolutionClass; \
+    inst_##SolutionClass.Run();
 
 // One.hpp
 #define TEST_TwoSum                     test_solution(TwoSum) // #1
@@ -26,8 +26,10 @@
 #define TEST_ThreeSum                   test_solution(ThreeSum) // #15
 #define TEST_ThreeSumClosest            test_solution(ThreeSumClosest) // #16
 #define TEST_FourSum                    test_solution(FourSum) // #18
+#define TEST_Permute                    test_solution(Permute) // #46
 #define TEST_MaxSubArray                test_solution(MaxSubArray) // #53
 #define TEST_MySqrt                     test_solution(MySqrt) // #69
+#define TEST_NumDecodings               test_solution(NumDecodings) // #91
 #define TEST_InorderTraversal           test_solution(InorderTraversal) // #94
 #define TEST_IsValidBST                 test_solution(IsValidBST) // #98
 
@@ -51,12 +53,17 @@
 #define TEST_MaxRotateFunction          test_solution(MaxRotateFunction) // #396
 
 // Five.hpp
+#define TEST_LevelOrder                 test_solution(LevelOrder) // #429
 #define TEST_FindAnagrams               test_solution(FindAnagrams) // #438
 #define TEST_FindContentChildren        test_solution(FindContentChildren) // #455
+#define TEST_RandomPointInRects         test_solution(RandomPointInRects) // #497
 
 // Six.hpp
+#define TEST_CountArrangement           test_solution(CountArrangement) // #526
 #define TEST_ComplexNumberMultiply      test_solution(ComplexNumberMultiply) // #537
 #define TEST_SubarraySum                test_solution(SubarraySum) // #560
+#define TEST_PreorderN                  test_solution(PreorderN) // #589
+#define TEST_PostorderN                 test_solution(PostorderN) // #590
 
 // Seven.hpp
 #define TEST_MyCircularQueue            test_solution(MyCircularQueue) // #622
@@ -70,6 +77,7 @@
 #define TEST_MinEatingSpeed             test_solution(MinEatingSpeed) // #875
 
 // Ten.hpp
+#define TEST_NumUniqueEmails            test_solution(NumUniqueEmails) // #929
 #define TEST_OddEvenJumps               test_solution(OddEvenJumps) // #975
 #define TEST_MinCostTickets             test_solution(MinCostTickets) // #983
 
@@ -80,6 +88,7 @@
 // Twelve.hpp
 #define TEST_Foo                        test_solution(Foo) // #1114
 #define TEST_LongestCommonSubsequence   test_solution(LongestCommonSubsequence) // #1143
+#define TEST_MaxNumberOfBalloons        test_solution(MaxNumberOfBalloons) // #1189
 
 // Others.hpp
 #define TEST_Fraction                   test_solution(Fraction) // LCP2

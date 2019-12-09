@@ -376,6 +376,45 @@ public:
     }
 };
 
+/* #46
+Given a collection of distinct integers, return all possible permutations.
+*/
+class Permute : public Solution
+{
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> items;
+        permute(nums, 0, items);
+        return items;
+    }
+
+    void permute(vector<int>& nums, int k, vector<vector<int>>& items)
+    {
+        if (k == nums.size())
+        {
+            items.push_back(nums);
+        }
+
+        for (int i = k; i < (int)nums.size(); i++)
+        {
+            std::swap(nums[k], nums[i]);
+            permute(nums, k + 1, items);
+            std::swap(nums[k], nums[i]);
+        }
+    }
+
+    virtual void Run()
+    {
+        vector<int> nums = { 1, 2, 3 };
+        auto ret = permute(nums);
+
+        for (auto it = ret.cbegin(); it != ret.cend(); it++)
+        {
+            cout << *it;
+        }
+    }
+};
+
 /* #53
 Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 https ://leetcode-cn.com/problems/maximum-subarray
@@ -460,6 +499,57 @@ public:
     virtual void Run()
     {
         cout << mySqrt(9) << endl;
+    }
+};
+
+/* #91
+A message containing letters from A-Z is being encoded to numbers using the following mapping:
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+Given a non-empty string containing only digits, determine the total number of ways to decode it.
+https://leetcode-cn.com/problems/decode-ways
+*/
+class NumDecodings : public Solution
+{
+    // Fabrac with condition
+public:
+    int numDecodings(string s) {
+        auto len = (int)s.length();
+        if (len == 0)
+        {
+            return 0;
+        }
+
+        vector<int> stats(len + 1, 0);
+        stats[0] = 1;
+        if ('1' <= s[0] && s[0] <= '9')
+        {
+            stats[1] = 1;
+        }
+
+        for (int i = 2; i <= len; i++)
+        {
+            if ('1' <= s[i - 1] && s[i - 1] <= '9')
+            {
+                stats[i] += stats[i - 1];
+            }
+
+            int n = (int)(s[i - 2] - '0') * 10 + (int)(s[i - 1] - '0');
+            if (10 <= n && n <= 26)
+            {
+                stats[i] += stats[i - 2];
+            }
+        }
+
+        return stats[len];
+    }
+
+    virtual void Run()
+    {
+        string s("312");
+        cout << numDecodings(s) << endl;
     }
 };
 
